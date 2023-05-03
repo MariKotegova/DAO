@@ -15,13 +15,16 @@ import java.util.stream.Collectors;
 @Repository
 public class ProductName {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplatee;
+    private String txtSql;
 
     public ProductName(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplatee = namedParameterJdbcTemplate;
+        this.txtSql = read("myScript.sql");
+
     }
 
     public List<String> getProductName(String customerName) {
-        return namedParameterJdbcTemplatee.queryForList(read("myScript.sql"),
+        return namedParameterJdbcTemplatee.queryForList(txtSql,
                 new MapSqlParameterSource("name", customerName),
                 String.class);
     }
